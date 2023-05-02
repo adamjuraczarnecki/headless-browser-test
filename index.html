@@ -45,7 +45,7 @@
   table th {
     border: 1px solid #C0C0C0;
     padding: 5px;
-/*    background: #F0F0F0;*/
+    /*    background: #F0F0F0;*/
   }
 
   table td {
@@ -93,6 +93,10 @@
         </tr>
         <tr id='test6'>
           <td>ConnectionRtt</td>
+          <td class="results"></td>
+        </tr>
+        <tr id='test7'>
+          <td>navigator.webdriver</td>
           <td class="results"></td>
         </tr>
       </tbody>
@@ -164,13 +168,13 @@ function testConnectionRtt() {
     return connectionRtt === 0 ? 'Headless' : 'Not Headless';
   }
 }
-console.log('\n\n\nheadless testes\n\n\n')
 document.querySelector('#test1 .results').innerHTML = testUserAgent()
 document.querySelector('#test2 .results').innerHTML = testChromeWindow()
 testNotificationPermissions(clb)
 document.querySelector('#test4 .results').innerHTML = testPlugins()
 document.querySelector('#test5 .results').innerHTML = testAppVersion()
 document.querySelector('#test6 .results').innerHTML = testConnectionRtt()
+document.querySelector('#test7 .results').innerHTML = navigator.webdriver
 </script>
 
 </html>

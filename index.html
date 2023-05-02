@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Headless browser test</title>
+  <style>
+  html {
+    display: grid;
+    place-items: center;
+    background-color: #2d2d2d;
+    color: #E7E8EC;
+  }
+
+  body {
+    width: 95Vw;
+    max-width: calc(500px + 4em);
+
+  }
+
+  header, main, footer, section, nav {
+    border: 1px solid #E7E8EC;
+    margin: 1em;
+    padding: 1em;
+  }
+
+  a {
+    color: #E7E8EC;
+  }
+
+  footer {
+    display: grid;
+    place-items: center;
+  }
+
+  table {
+    place-self: center;
+    border: 1px solid #C0C0C0;
+    border-collapse: collapse;
+    padding: 5px;
+    min-width: 100%;
+  }
+
+  table th {
+    border: 1px solid #C0C0C0;
+    padding: 5px;
+/*    background: #F0F0F0;*/
+  }
+
+  table td {
+    border: 1px solid #C0C0C0;
+    padding: 5px;
+  }
+  </style>
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K3PPDF4" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <header>
+    <h1>Headless browser test</h1>
+  </header>
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th>Test name<br></th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id='test1'>
+          <td>UserAgent</td>
+          <td class="results"></td>
+        </tr>
+        <tr id='test2'>
+          <td>ChromeWindow</td>
+          <td class="results"></td>
+        </tr>
+        <tr id='test3'>
+          <td>NotificationPermissions</td>
+          <td class="results"></td>
+        </tr>
+        <tr id='test4'>
+          <td>Plugins</td>
+          <td class="results"></td>
+        </tr>
+        <tr id='test5'>
+          <td>AppVersion</td>
+          <td class="results"></td>
+        </tr>
+        <tr id='test6'>
+          <td>ConnectionRtt</td>
+          <td class="results"></td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+  <section>
+    <p>Based on <a href="https://piprogramming.org/articles/6-Ways-to-detect-a-headless-Browser-with-JavaScript--How-to-detect-a-Headless-Browser-0000000030.html">Louis Klimek article</a></p>
+    </a>
+  </section>
+  <footer>
+    <a href="https://github.com/adamczarnecki/">Adam Czarnecki</a>
+  </footer>
+</body>
+<script>
+function clb(number) {
+  document.querySelector('#test3 .results').innerHTML = number === 1 ? 'Headless' : 'Not Headless'
+}
+
+function testUserAgent() {
+  if (/HeadlessChrome/.test(window.navigator.userAgent)) {
+    // Headless
+    return 'Headless';
+  } else {
+    // Not Headless
+    return 'Not Headless';
+  }
+}
+
+function testChromeWindow() {
+  if (eval.toString().length == 33 && !window.chrome) {
+    // Headless
+    return 'Headless';
+  } else {
+    // Not Headless
+    return 'Not Headless';
+  }
+}
+
+function testNotificationPermissions(callback) {
+  navigator.permissions.query({
+    name: 'notifications'
+  }).then(function(permissionStatus) {
+    if (Notification.permission === 'denied' && permissionStatus.state === 'prompt') {
+      // Headless
+      callback(1);
+    } else {
+      // Not Headless
+      callback(0);
+    }
+  });
+}
+
+function testPlugins() {
+  let length = navigator.plugins.length;
+  return length === 0 ? 'Headless' : 'Not Headless';
+}
+
+function testAppVersion() {
+  let appVersion = navigator.appVersion;
+  return /headless/i.test(appVersion) ? 'Headless' : 'Not Headless';
+}
+
+function testConnectionRtt() {
+  let connection = navigator.connection;
+  let connectionRtt = connection ? connection.rtt : undefined;
+  if (connectionRtt === undefined) {
+    return 'Not Headless'; // Flag doesn't even exists so just return NOT HEADLESS
+  } else {
+    return connectionRtt === 0 ? 'Headless' : 'Not Headless';
+  }
+}
+console.log('\n\n\nheadless testes\n\n\n')
+document.querySelector('#test1 .results').innerHTML = testUserAgent()
+document.querySelector('#test2 .results').innerHTML = testChromeWindow()
+testNotificationPermissions(clb)
+document.querySelector('#test4 .results').innerHTML = testPlugins()
+document.querySelector('#test5 .results').innerHTML = testAppVersion()
+document.querySelector('#test6 .results').innerHTML = testConnectionRtt()
+</script>
+
+</html>

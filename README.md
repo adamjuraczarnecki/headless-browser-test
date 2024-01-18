@@ -1,6 +1,6 @@
 # headless-browser-test
 
-https://adamczarnecki.github.io/headless-browser-test/
+https://adamjuraczarnecki.github.io/headless-browser-test/
 
 based on [Louis Klimek article](https://piprogramming.org/articles/6-Ways-to-detect-a-headless-Browser-with-JavaScript--How-to-detect-a-Headless-Browser-0000000030.html)
 
